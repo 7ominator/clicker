@@ -8,13 +8,15 @@
 <body>
 <script>
   var clicks = "0";
-  var increment = "50";
+  var increment = "1000";
   var cost = "10";
   var cost2 = "100";
   var delay = "1000";
   var autoclickers = "0";
   var isDoubled = "0";
   var acMode = "0";
+  var over5k = "0";
+  var over1k = "0";
   function update() {
      document.getElementById("clickcount").innerHTML = clicks;
      document.getElementById("cost").innerHTML = cost;
@@ -25,6 +27,12 @@
   function increaseC(){
     for(var i = 0; i<increment; i++){
     clicks++;
+    if(clicks > 1000){
+      over1k = 1;
+    }
+    if(clicks > 5000){
+      over5k = 1;
+    }
     update();
     }
   }
@@ -56,7 +64,13 @@
         if(acMode == 1){
           increaseC();
         } else{
-        clicks++;
+          clicks++;
+          if(clicks > 1000){
+            over1k = 1;
+          }
+          if(clicks > 5000){
+            over5k = 1;
+          }
         }
         update();
       }, delay
@@ -64,10 +78,6 @@
     } else {
       alert("not enough clicks!");
     }
-  }
-  function acClick2(){
-    clicks++;
-    update();
   }
   function doubleI(){
     if(clicks >= 1000 && isDoubled == 0){
@@ -81,7 +91,7 @@
       alert("I said one time offer >:(");
     }
   }
-  function acMode(){
+  function acModeUpdate(){
     if(acMode == 0 && clicks >= 5000){
       clicks = clicks-5000;
       acMode = 1;
@@ -96,7 +106,7 @@
   
   <body onload="update()">
   <br> Current clicks: <span id="clickcount"></span> </h1> <form>
-  <input type="button" onclick="increaseC();" value="Click!">
+  <input type="button" onclick="increaseC();"  value="Click!">
   </form>
   
   <br> Current gain: <span id="increment"></span> </hl>
@@ -110,11 +120,12 @@
   </form>
 
   <br> One Time Offer! Double your Gain for just 1000! </h1> <form>
-  <input type="button" onclick="doubleI();" value="gain x2">
+  <input type="button" onclick="doubleI(); this.style.display='none';" value="gain x2">
   </form>
 
   <br> One Time Offer! Autoclickers add your gain instead of 1 for just 5000! </h1> <form>
-  <input type="button" onclick="doubleI();" value="gain x2">
+  <input type="button" onclick="acModeUpdate(); this.style.display='none';" value="Change Autoclicker Mode">
   </form>
+
 </body>
 </html>
